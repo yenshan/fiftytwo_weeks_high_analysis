@@ -1,0 +1,37 @@
+# Generated data files
+*.db
+*.parquet  # Optional intermediate files (not required)
+*.csv
+
+# Backup and temporary directories
+jp_all/
+_tmp/
+_back/
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+
+# Jupyter notebook checkpoints
+.ipynb_checkpoints/
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Log files
+*.log
