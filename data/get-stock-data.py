@@ -1,9 +1,8 @@
 #!/usr/bin/env python
-import os
 import sys
 import time
 import yfinance as yf
-import mplfinance as mpf
+import argparse
 
 def fetch_stock_data(ticker, period="1y"):
     max_attempts = 3
@@ -16,7 +15,6 @@ def fetch_stock_data(ticker, period="1y"):
             if hist.empty:
                 raise ValueError(f"No data fetched for {ticker}. Possibly delisted or wrong ticker.")
 
-            print(f"got data of {ticker}", file=sys.stderr)
             return hist
         except Exception as e:
             print(f"Attempt {attempt}: Failed to fetch data for {ticker} - {e}", file=sys.stderr)
@@ -29,18 +27,13 @@ def fetch_stock_data(ticker, period="1y"):
 
 
 def main():
-    if len(sys.argv) < 2:
-        print("Usage: get-stock-data.py <ticker> [period]")
-        sys.exit(1)
-    elif len(sys.argv) < 3:
-        period = "1y"
-    else:
-        # Handle period correctly (e.g., "5" -> "5y")
-        period_arg = sys.argv[2]
-        if period_arg.isdigit():
-            period = f"{period_arg}y"
-        else:
-            period = period_arg
+    parser = argparse.ArgumentParser()
+    parser.add_argument("ticker", help="Stock ticker simbol")
+    parser.add_argument("period", nargs="?", default="1y", help="Period like [1y|1mo|1d|ytd]")
+
+    args = parser.parse_args()
+
+    period = f"{args.period}y" if args.period.isdigit() else args.period
 
     ticker = sys.argv[1]
     data = fetch_stock_data(ticker, period)
